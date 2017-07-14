@@ -5,6 +5,7 @@ import feign.jackson.JacksonDecoder;
 import feign.okhttp.OkHttpClient;
 import gft.retrofit.client.GitHubClient;
 import gft.retrofit.client.HttpBinClient;
+import gft.retrofit.interceptor.SecurityInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,6 +35,7 @@ public class App {
         return Feign.builder()
                 .decoder(new JacksonDecoder())
                 .client(okHttpClient())
+                .requestInterceptor(new SecurityInterceptor())
                 .target(GitHubClient.class, gitHubUrl);
     }
 
@@ -43,6 +45,7 @@ public class App {
         return Feign.builder()
                 .decoder(new JacksonDecoder())
                 .client(okHttpClient())
+                .requestInterceptor(new SecurityInterceptor())
                 .target(HttpBinClient.class, httpBinUrl);
     }
 }
